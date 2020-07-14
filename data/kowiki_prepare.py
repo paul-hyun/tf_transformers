@@ -6,33 +6,13 @@ import json
 import os
 import re
 import sys
+import zipfile
+import shutil
 
 import wget
 from tqdm import tqdm
 
 sys.path.append("..")
-from common.mecab import encode_mecab
-
-
-def dump_mecab(txt, output):
-    """
-    txt 파일을 mecab 형태소 분석된 txt로 저장
-    :param txt: 원본 txt 파일
-    :param output: 저장할 파일
-    """
-    # 파일 라인
-    total = 0
-    with open(txt) as in_f:
-        for line in in_f:
-            total += 1
-
-    with open(output, "w") as f:
-        with open(txt) as in_f:
-            for line in tqdm(in_f, total=total, desc="dump mecab"):
-                line = line.strip()
-                tokens, _ = encode_mecab(line)
-                f.write(" ".join(tokens))
-                f.write("\n")
 
 
 def dump_txt(data_list, output):
@@ -77,7 +57,7 @@ def exec_WikiExtractor(data_dir, filename):
         print(f"download WikiExtractor.py ...")
         wget.download("https://raw.githubusercontent.com/attardi/wikiextractor/master/WikiExtractor.py", "WikiExtractor.py")
 
-    output = f"{data_dir}/json-{datetime.date.today().isoformat()}"
+    output = os.path.join(data_dir, f"json-{datetime.date.today().isoformat()}")
     # 폴더가 있으면 생성 된 것으로 판단. 폴더가 없는 경우 WikiExtractor 실행
     if not os.path.exists(output):
         print(f"exec WikiExtractor input: {filename}, output: {output} ...")
@@ -91,8 +71,8 @@ def exec_WikiExtractor(data_dir, filename):
         for f in x[2]:
             find = re.findall(r"wiki_[0-9][0-9]", f)
             if find:
-                wiki_list.append(f"{path}/{f}")
-    return wiki_list
+                wiki_list.append(os.path.join(path, f))
+    return wiki_list, output
 
 
 def download_kowiki(data_dir):
@@ -101,7 +81,7 @@ def download_kowiki(data_dir):
     :param data_dir: download dir
     :return filename: download filename
     """
-    filename = f"{data_dir}/kowiki-pages-meta-current-{datetime.date.today().isoformat()}.xml.bz2"
+    filename = os.path.join(data_dir, f"kowiki-pages-meta-current-{datetime.date.today().isoformat()}.xml.bz2")
     # 파일이 없을 경우만 다운로드
     if not os.path.exists(filename):
         print(f"download {filename} ...")
@@ -123,16 +103,22 @@ def main(args):
     filename = download_kowiki(args.data_dir)
 
     # WikiExtractor 실행
-    wiki_list = exec_WikiExtractor(args.data_dir, filename)
+    wiki_list, wiki_out = exec_WikiExtractor(args.data_dir, filename)
 
     # witk multi new line 제거
     data_list = trim_wiki(wiki_list)
 
     # wiki를 txt 파일로 저장
-    dump_txt(data_list, f"{args.data_dir}/kowiki.txt")
+    wiki_txt = os.path.join(args.data_dir, "kowiki.txt")
+    dump_txt(data_list, wiki_txt)
 
-    # txt를 형태소 분석한 파일로 저장
-    dump_mecab(f"{args.data_dir}/kowiki.txt", f"{args.data_dir}/kowiki_mecab.txt")
+    # zip
+    with zipfile.ZipFile(os.path.join(args.data_dir, "kowiki.txt.zip"), "w") as z:
+        z.write(wiki_txt, "kowiki.txt")
+
+    os.remove(filename)
+    shutil.rmtree(wiki_out)
+    os.remove(wiki_txt)
 
 
 def parse_args():
