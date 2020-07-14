@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 
-import sentencepiece as spm
 import argparse
 import os
 import zipfile
+
+import sentencepiece as spm
 
 
 def train_sentencepiece(corpus, prefix, vocab_size):

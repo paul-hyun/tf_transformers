@@ -2,14 +2,11 @@
 
 import argparse
 import collections
-import sys
 import zipfile
 
 import konlpy
 import pandas as pd
 from tqdm import tqdm
-
-sys.path.append("..")
 
 
 def word_count(args, name, tagger):

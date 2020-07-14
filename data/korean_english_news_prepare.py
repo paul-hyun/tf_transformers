@@ -1,19 +1,11 @@
 # -*- coding:utf-8 -*-
 
 import argparse
-import datetime
-import json
 import os
-import re
-import sys
-import zipfile
 import tarfile
-import shutil
+import zipfile
 
 import wget
-from tqdm import tqdm
-
-sys.path.append("..")
 
 
 def dump_txt(data_dir, file_list):
@@ -125,7 +117,6 @@ def main(args):
     os.remove(en_corpus)
     for filename in file_list:
         os.remove(filename)
-
 
 
 def parse_args():

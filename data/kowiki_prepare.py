@@ -5,14 +5,11 @@ import datetime
 import json
 import os
 import re
-import sys
-import zipfile
 import shutil
+import zipfile
 
 import wget
 from tqdm import tqdm
-
-sys.path.append("..")
 
 
 def dump_txt(data_list, output):
@@ -114,7 +111,7 @@ def main(args):
 
     # zip
     with zipfile.ZipFile(os.path.join(args.data_dir, "kowiki.txt.zip"), "w") as z:
-        z.write(wiki_txt, "kowiki.txt")
+        z.write(wiki_txt, os.path.basename(wiki_txt))
 
     os.remove(filename)
     shutil.rmtree(wiki_out)
