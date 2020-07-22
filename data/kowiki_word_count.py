@@ -15,7 +15,6 @@ def word_count(args, name, tagger):
     :param args: input arguments
     :param name: 형태소 분석기 이름
     :param tagger: 형태소 분석기 객체
-    :param tags: count 계산할 tags
     :return: 형태소 분석 pandas dataframe
     """
     # tag 별 counter
