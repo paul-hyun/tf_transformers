@@ -1,9 +1,15 @@
 # KoWiki python scripts
 
 ## kowiki_prepare.py
-- 최종 kowiki 파일 다운로드 및 전처리
+- 최신 kowiki 파일 다운로드 및 전처리
 - 출력
   - kowiki.txt.zip: 토픽 단위로 정리된 text 파일
+
+## kowiki_mecab_prepare.py
+- kowiki.txt.zip 파일을 mecab 형태소 분석을 수행한 corpus 생성
+- 출력
+  - kowiki_mecab.txt.zip: 토픽 단위로 정리된 text 파일
+
 
 ## kowiki_word_count.py
 - 형태소분석기 별로 형태소 및 단어 발생 빈도 측정
@@ -16,8 +22,14 @@
 ## kowiki_vocab_spm.py
 - sentencepiece vocab 생성
 - 출력
-  - kowiki_<n_vocab>.model: sentencepiece vocab model
-  - kowiki_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_unigram_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_unigram_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_bpe_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_bpe_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_mecab_unigram_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_mecab_unigram_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_mecab_bpe_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_mecab_bpe_<n_vocab>.vocab: sentencepiece vocab txt
 
 
 # korean-english-news python scripts
