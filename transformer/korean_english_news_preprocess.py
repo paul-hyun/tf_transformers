@@ -10,33 +10,33 @@ import sentencepiece as spm
 import yaml
 
 
-def dump_json(vocab_ko, vocab_en, file_list, output):
+def dump_json(vocab_ko, vocab_en, in_files, out_file):
     """
     json 형태로 ko, en 파일 저장
     :param vocab_ko: korean vocab
     :param vocab_en: english vocab
-    :param file_list: korean, english file list
-    :param output: output json filename
+    :param in_files: korean, english file list
+    :param out_file: output json filename
     """
     # korean, english line 목록 저장
     ko_lines, en_lines = [], []
-    for filename in file_list:
-        if filename.endswith(".ko"):
-            with open(filename) as f:
+    for in_file in in_files:
+        if in_file.endswith(".ko"):
+            with open(in_file) as f:
                 ko_lines.extend(f.readlines())
-        if filename.endswith(".en"):
-            with open(filename) as f:
+        if in_file.endswith(".en"):
+            with open(in_file) as f:
                 en_lines.extend(f.readlines())
     assert len(ko_lines) == len(en_lines)
 
-    filename, ext = os.path.splitext(output)
+    filename, ext = os.path.splitext(out_file)
     with open(f"{filename}", "w") as f:
         for ko, en in zip(ko_lines, en_lines):
             f.write(json.dumps({"ko": vocab_ko.encode_as_pieces(ko.lower()), "en": vocab_en.encode_as_pieces(en.lower())}, ensure_ascii=False))
             f.write("\n")
 
     # zip
-    with zipfile.ZipFile(output, "w") as z:
+    with zipfile.ZipFile(out_file, "w") as z:
         z.write(filename, os.path.basename(filename))
 
     # file 삭제
@@ -98,7 +98,7 @@ def parse_args():
     build arguments
     :return args: input arguments
     """
-    parser = argparse.ArgumentParser(description="Sentencepeice vocab korean_english_news arguments.")
+    parser = argparse.ArgumentParser(description="pre-processing korean_english_news arguments.")
     parser.add_argument("--config", type=str, default="config/korean_english_news_ko_en_32000.yaml", required=False, help="configuration file")
     parser.add_argument("--data_dir", type=str, default="../data/korean_english_news", required=False, help="korean english news data directory")
 
