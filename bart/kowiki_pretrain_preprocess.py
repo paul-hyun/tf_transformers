@@ -106,8 +106,6 @@ def create_pretrain_rotate(tokens):
             continue
         if token.startswith(u"\u2581"):
             cand_idx.append(i)
-    # random rotate를 위해서 순서를 섞음
-    random.shuffle(cand_idx)
 
     if 1 < len(cand_idx):
         # 처음 index를 제외한 나머지에서 랜덤 선택
@@ -115,7 +113,7 @@ def create_pretrain_rotate(tokens):
         # 순서 변경
         rotated = tokens[index:] + tokens[:index]
         assert len(tokens) == len(rotated)
-    else:  # 문장이 1개인 경우는 rotate 불가
+    else:  # 단어가 1개인 경우는 rotate 불가
         rotated = tokens
 
     return rotated
@@ -129,7 +127,7 @@ def create_pretrain_permute(tokens, line_index):
     :return tokens: mask된 tokens
     """
     if 1 < len(line_index):
-        # line 단위로 token 분
+        # line 단위로 token 분리
         lines = []
         for i in range(len(line_index)):
             lines.append(tokens[line_index[i - 1] if 0 < i else 0:line_index[i]])
