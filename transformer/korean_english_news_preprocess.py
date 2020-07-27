@@ -99,7 +99,7 @@ def parse_args():
     :return args: input arguments
     """
     parser = argparse.ArgumentParser(description="pre-processing korean_english_news arguments.")
-    parser.add_argument("--config", type=str, default="config/korean_english_news_ko_en_32000.yaml", required=False, help="configuration file")
+    parser.add_argument("--config", type=str, default="config/pretrain_kowiki_finetune_nsmc.yaml", required=False, help="configuration file")
     parser.add_argument("--data_dir", type=str, default="../data/korean_english_news", required=False, help="korean english news data directory")
 
     args = parser.parse_args()

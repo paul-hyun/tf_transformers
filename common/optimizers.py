@@ -70,7 +70,7 @@ def get_schedule(config):
     if config["name"] == "InverseSquareRootSchedule":
         return InverseSquareRootSchedule(config["d_model"], config["warmup_steps"])
     elif config["name"] == "CosineSchedule":
-        return InverseSquareRootSchedule(config["train_steps"], config["warmup_steps"], config["max_lr"])
+        return CosineSchedule(config["train_steps"], config["warmup_steps"], config["max_lr"])
 
 
 def get_optimizer(config, learning_rate=None):
