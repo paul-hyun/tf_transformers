@@ -49,6 +49,15 @@ def main(args):
     # train corpus 삭제
     os.remove(args.mecab_txt)
 
+    # train corpus 앞축 풀기
+    with zipfile.ZipFile(os.path.join(args.data_dir, args.noun_zip)) as z:
+        z.extract(args.noun_txt)
+    # sentencepiece 학습
+    train_sentencepiece(args.noun_txt, os.path.join(args.data_dir, f"kowiki_noun_unigram_{args.n_vocab}"), args.n_vocab, "unigram")
+    train_sentencepiece(args.noun_txt, os.path.join(args.data_dir, f"kowiki_noun_bpe_{args.n_vocab}"), args.n_vocab, "bpe")
+    # train corpus 삭제
+    os.remove(args.noun_txt)
+
 
 def parse_args():
     """
@@ -61,6 +70,8 @@ def parse_args():
     parser.add_argument("--txt", type=str, default="kowiki.txt", required=False, help="kowiki source txt file")
     parser.add_argument("--mecab_zip", type=str, default="kowiki_mecab.txt.zip", required=False, help="kowiki mecab source zip file")
     parser.add_argument("--mecab_txt", type=str, default="kowiki_mecab.txt", required=False, help="kowiki mecab source txt file")
+    parser.add_argument("--noun_zip", type=str, default="kowiki_noun.txt.zip", required=False, help="kowiki noun source zip file")
+    parser.add_argument("--noun_txt", type=str, default="kowiki_noun.txt", required=False, help="kowiki noun source txt file")
     parser.add_argument("--n_vocab", type=int, default=32000, required=False, help="kowiki vocab count")
 
     args = parser.parse_args()
