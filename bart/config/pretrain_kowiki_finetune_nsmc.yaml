@@ -1,0 +1,26 @@
+"model":
+  "d_model": 256
+  "n_head": 4
+  "d_head": 64
+  "dropout": 0.1
+  "d_ff": 1024
+  "layernorm_epsilon": 1.e-12
+  "n_layer": 3
+  "n_seq": 256
+  "n_vocab": 0
+  "i_pad": 0
+"vocab": "kowiki_unigram_32000.model"
+"data":
+  "corpus": "kowiki.txt.zip"
+  "pre_train": "kowiki_unigram_32000.json.zip"
+  "mask_prob": 0.15
+"schedule":
+  "name": "CosineSchedule"
+  "train_steps": 10000
+  "warmup_steps": 4000
+  "max_lr": 2.5e-4
+"optimizer":
+  "name": "Adam"
+  "beta_1": 0.9
+  "beta_2": 0.98
+  "epsilon": 1.e-9
