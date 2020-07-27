@@ -11,6 +11,12 @@
   - kowiki_mecab.txt.zip: 토픽 단위로 정리된 text 파일
 
 
+## kowiki_noun_prepare.py
+- kowiki.txt.zip 파일을 kb noun_splitter 분석을 수행한 corpus 생성 (https://github.com/KB-Bank-AI/KB-ALBERT-KO/blob/master/src/preprocessing/noun_splitter.py)
+- 출력
+  - kowiki_noun.txt.zip: 토픽 단위로 정리된 text 파일
+
+
 ## kowiki_word_count.py
 - 형태소분석기 별로 형태소 및 단어 발생 빈도 측정
   - 향후 효과적인 vocab을 만들기 위함
@@ -30,6 +36,10 @@
   - kowiki_mecab_unigram_<n_vocab>.vocab: sentencepiece vocab txt
   - kowiki_mecab_bpe_<n_vocab>.model: sentencepiece vocab model
   - kowiki_mecab_bpe_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_noun_unigram_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_noun_unigram_<n_vocab>.vocab: sentencepiece vocab txt
+  - kowiki_noun_bpe_<n_vocab>.model: sentencepiece vocab model
+  - kowiki_noun_bpe_<n_vocab>.vocab: sentencepiece vocab txt
 
 
 # korean-english-news python scripts
