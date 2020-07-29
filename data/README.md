@@ -61,3 +61,11 @@
   - korean_english_news_en_<n_vocab>.model: sentencepiece en vocab model
   - korean_english_news_en_<n_vocab>.vocab: sentencepiece en vocab txt
 
+
+# nsmc script
+
+## nsmc prepare
+- nsmc download
+- 출력
+  - nsmc.zip: 다운로드한 파일
+ 
