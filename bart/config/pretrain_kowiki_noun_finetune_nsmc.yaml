@@ -14,6 +14,8 @@
   "corpus": "kowiki_noun.txt.zip"
   "pre_train": "kowiki_noun_unigram_32000.json.zip"
   "mask_prob": 0.15
+  "nsmc_train": "nsmc_noun_unigram_32000_train.json.zip"
+  "nsmc_test": "nsmc_noun_unigram_32000_test.json.zip"
 "schedule":
   "name": "CosineSchedule"
   "train_steps": 10000

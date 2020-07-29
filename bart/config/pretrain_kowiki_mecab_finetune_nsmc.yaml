@@ -12,8 +12,10 @@
 "vocab": "kowiki_mecab_unigram_32000.model"
 "data":
   "corpus": "kowiki_mecab.txt.zip"
-  "pre_train": "kowiki_medab_unigram_32000.json.zip"
+  "pre_train": "kowiki_mecab_unigram_32000.json.zip"
   "mask_prob": 0.15
+  "nsmc_train": "nsmc_mecab_unigram_32000_train.json.zip"
+  "nsmc_test": "nsmc_mecab_unigram_32000_test.json.zip"
 "schedule":
   "name": "CosineSchedule"
   "train_steps": 10000
