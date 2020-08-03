@@ -425,8 +425,9 @@ class BART(tf.keras.layers.Layer):
         for decoder_layer in self.decoder_layers:
             dec_out = decoder_layer(dec_out, enc_out, dec_self_mask, ende_attn_mask)
 
-        logits = self.embedding(dec_out, mode="linear")
-        return logits
+        logits_cls = dec_out[:, -1]
+        logits_lm = self.embedding(dec_out, mode="linear")
+        return logits_cls, logits_lm
 
     def get_embedding(self, tokens):
         """
@@ -438,18 +439,34 @@ class BART(tf.keras.layers.Layer):
         return embed
 
 
-# model build
-def build_model(config):
+def build_model_pre_train(config):
     """
-    model build
+    model build for pre-train
     :param config: Configuration
     :return model
     """
     enc_tokens = tf.keras.layers.Input((None,), name="enc_tokens")
     dec_tokens = tf.keras.layers.Input((None,), name="dec_tokens")
 
-    logits = BART(config)((enc_tokens, dec_tokens))
-    outputs = tf.keras.layers.Softmax(name="lm")(logits)
+    _, logits_lm = BART(config)((enc_tokens, dec_tokens))
+    outputs = tf.keras.layers.Softmax(name="lm")(logits_lm)
+
+    model = tf.keras.Model(inputs=(enc_tokens, dec_tokens), outputs=outputs)
+    return model
+
+
+def build_model_class(config, n_class):
+    """
+    model build for classifier
+    :param config: Configuration
+    :param n_class: output class number
+    :return model
+    """
+    enc_tokens = tf.keras.layers.Input((None,), name="enc_tokens")
+    dec_tokens = tf.keras.layers.Input((None,), name="dec_tokens")
+
+    logits_cls, _ = BART(config)((enc_tokens, dec_tokens))
+    outputs = tf.keras.layers.Dense(n_class, activation=tf.nn.softmax, name="cls")(logits_cls)
 
     model = tf.keras.Model(inputs=(enc_tokens, dec_tokens), outputs=outputs)
     return model

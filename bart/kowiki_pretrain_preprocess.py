@@ -329,10 +329,10 @@ def main(args):
 
     # vocab loading
     vocab = spm.SentencePieceProcessor()
-    vocab.load(os.path.join(args.data_dir, config["vocab"]))
+    vocab.load(os.path.join(args.kowiki_dir, config["vocab"]))
 
     # json dump
-    dump_json(vocab, os.path.join(args.data_dir, config["data"]["corpus"]), os.path.join(args.data_dir, config["data"]["pre_train"]), config["model"]["n_seq"], config["data"]["mask_prob"])
+    dump_json(vocab, os.path.join(args.kowiki_dir, config["data"]["corpus"]), os.path.join(args.kowiki_dir, config["data"]["pre_train"]), config["model"]["n_seq"], config["data"]["mask_prob"])
 
 
 def parse_args():
@@ -342,7 +342,7 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description="pre-train pre-processing kowiki arguments.")
     parser.add_argument("--config", type=str, default="config/pretrain_kowiki_finetune_nsmc.yaml", required=False, help="configuration file")
-    parser.add_argument("--data_dir", type=str, default="../data/kowiki", required=False, help="kowiki data directory")
+    parser.add_argument("--kowiki_dir", type=str, default="../data/kowiki", required=False, help="kowiki data directory")
 
     args = parser.parse_args()
     return args
