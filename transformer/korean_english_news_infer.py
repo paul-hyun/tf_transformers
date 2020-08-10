@@ -25,10 +25,16 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2"
 
 def do_predict(model, vocab_ko, vocab_en, n_seq, string, src="ko", dst="en", i_pad=0):
     """
-    입력에 대한 답변 생성하는 함수
-    :param model: model
-    :param n_seq: 입력 개수
-    :param string: 입력 문자열
+    입력을 번역하는 함수
+    :param model: model object
+    :param vocab_ko: korean vocab
+    :param vocab_en: english vocab
+    :param n_seq: sequence number
+    :param string: input string
+    :param src: source lang type
+    :param dst: target lang type
+    :param i_pad: pad index
+    :return:
     """
     vocab_src = vocab_ko if src == "ko" else vocab_en
     vocab_dst = vocab_en if dst == "en" else vocab_ko
